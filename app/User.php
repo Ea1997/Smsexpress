@@ -5,6 +5,9 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Rent;
+use App\Comment;
+use App\Post;
 
 class User extends Authenticatable
 {
@@ -50,7 +53,9 @@ class User extends Authenticatable
         static::created(
             function($user){
                 $user->profile()->create([
+
                     'user_id'=>$user->id,
+                    'image'=>$user->id,
                 ]);
 
 
@@ -59,7 +64,7 @@ class User extends Authenticatable
     }
     public function item()
     {
-        return $this->hasMany(Items::class)->orderBy('created_at','DESC');
+        return $this->hasMany(Item::class)->orderBy('created_at','DESC');
 
     }
     public function comments()

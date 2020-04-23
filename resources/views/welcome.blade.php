@@ -20,6 +20,7 @@
                 margin: 0;
             }
 
+
             .full-height {
                 height: 100vh;
             }
@@ -61,28 +62,71 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .menu ul {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                border: 1px solid #e7e7e7;
+                background-color: #f3f3f3;
+            }
+
+            .menu li {
+                float: left;
+            }
+
+            .menu li a {
+                display: block;
+                color: #666;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            .menu li a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+
         </style>
     </head>
+    @extends('layouts.app')
     <body>
-        <div class="flex-center position-ref full-height">
-            @extends('layouts.header')
+    @section('content')
+<div style="width: 100%" class="menu">
+    <ul>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+        @foreach($testes as $teste)
+        <li><a href="/categorie/{{$teste->id}}">{{$teste->nom}}</a></li>
+@endforeach
+    </ul>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+
+</div>
+<div class="row pt-2 pb-4 w-100 flex-center " class="search">
+<h1>1er site de location de particuliers et professionnels à l'ENSA de Tétouan</h1>
+    <form method="POST" action="/search" class="w-100 flex-center ">
+        @csrf
+    <input type="search" results=5 placeholder="Catégorie...nom d'objet" name="search" class="w-50 p-2">
+        <button name="chercher" type="button" class="btn btn-primary w-20 p-2">Chercher</button>
+    </form>
+</div>
+        <div class="flex-center position-ref  w-100">
+            <div class="content w-100">
+                <div class="row pt-5">
+                    @foreach($posts as $post)
+                        <div class="col-4 pb-5 border">
+                            publié par :{{$post->user->name." ".$post->user->Pname}}<br>
+titre:{{$post->Titre}}<br>
+                            categorie: {{$post->categorie}}
+
+                        </div>
+                    @endforeach
+
+
                 </div>
             </div>
         </div>
     </body>
 </html>
+@endsection
